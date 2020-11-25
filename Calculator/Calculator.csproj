@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="JavaScript\JavaScript.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

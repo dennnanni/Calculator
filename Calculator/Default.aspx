@@ -1,14 +1,16 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Calculator.Default" %>
 
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+    <script type="text/javascript" src="JavaScript/JavaScript.js"></script>
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form runat="server">
         <div >
                 <asp:TextBox ID="txtEspressione" runat="server" Height="73px" Width="326px" Font-Size="21" ReadOnly="True"></asp:TextBox>
             <br />

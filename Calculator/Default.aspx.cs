@@ -237,7 +237,7 @@ namespace Calculator
         {
             // L'operando di backup e il numero due di backup serve se ho gia fatto un operazione e continuo a 
             // premere uguale. L'operazione viene reiterata sul risultato.
-            if(Session["opBackup"] != null && Session["n2Backup"] != null)
+            if(Session["operando"] == null && Session["opBackup"] != null && Session["n2Backup"] != null)
             {
                 double n1 = double.Parse(Session["n1"].ToString());
                 double n2 = double.Parse(Session["n2Backup"].ToString());
@@ -557,11 +557,20 @@ namespace Calculator
             object n1 = Session["n1"], n2 = Session["n2"], op = Session["operando"];
 
             // Se si sta operando sul primo operando l'operazione di percentuale non è possibile
-            if(op == null || n2 == null)
+            if (n1 != null && n2 == null)
+            {
+                Session["result"] = (double)n1 / 100;
+                Session["n1"] = Session["result"];
+                txtEspressione.Text = Session["result"].ToString();
+                return;
+            }
+
+            if (op == null || n2 == null)
             {
                 txtEspressione.Text = "";
                 return;
             }
+            
 
             double value1 = double.Parse(n1.ToString());
             double value2 = double.Parse(n2.ToString());
