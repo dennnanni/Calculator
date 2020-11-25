@@ -115,8 +115,6 @@ namespace Calculator
             double result = 0, value = double.NaN;
             string name = "";
             object n1 = Session["n1"], n2 = Session["n2"], savedOp = Session["operando"], savedResult = Session["result"];
-            //Session["opBackup"] = null;
-            //Session["n2Backup"] = null;
 
             if (savedOp == null) 
             {
@@ -176,6 +174,7 @@ namespace Calculator
             }
             else
             {
+                // Se Il risultato è inizializzato e n1 no significa che l'operazione è successiva
                 if (savedResult != null && n1 == null && n2 != null)
                 {
                     string message;
@@ -198,7 +197,7 @@ namespace Calculator
                     Session["operando"] = op;
                     txtEspressione.Text = result.ToString();
                 }
-                else if(n1 != null && n2 != null)
+                else if(n1 != null && n2 != null) // In caso fosse la prima operazione
                 {
                     string message;
                     result = Operations(double.Parse(n1.ToString()), double.Parse(n2.ToString()), savedOp.ToString(), out message);
@@ -219,7 +218,7 @@ namespace Calculator
                     Session["operando"] = op;
                     txtEspressione.Text = result.ToString();
                 }
-                else
+                else // Se non ci sono operazioni da fare 
                 {
                     Session["operando"] = op;
                     txtEspressione.Text = "";
