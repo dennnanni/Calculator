@@ -77,6 +77,9 @@ namespace Calculator
                 }
                 else if (n1 != null) // Se il numero non è nullo, ci concateno la cifra
                 {
+                    if (number == "," && n1.ToString().Contains(','))
+                        return;
+
                     n1 = n1.ToString() + number.ToString(); // Concatena la cifra
                 }
 
@@ -92,10 +95,16 @@ namespace Calculator
                 if (n2 == null || double.IsInfinity(double.Parse(n2.ToString())))
                 {
                     n2 = "";
-                    n2 = n2.ToString() + number.ToString(); // Concatena la cifra
+                    if (number == ",")
+                        n2 = 0 + number.ToString();  // Concatena la cifra
+                    else
+                        n2 = n2.ToString() + number.ToString();  // Concatena la cifra
                 }
                 else if (n2 != null) // Se il numero non è nullo, ci concateno la cifra
                 {
+                    if (number == "," && n2.ToString().Contains(','))
+                        return;
+
                     n2 = n2.ToString() + number.ToString(); // Concatena la cifra
                 }
 
@@ -413,6 +422,7 @@ namespace Calculator
         {
             double value = 0;
 
+            // Verifica che ci sia qualcosa nella textbox per evitare una conversione a vuoto
             if (txtEspressione.Text.Length != 0)
                 value = double.Parse(txtEspressione.Text);
 
@@ -426,6 +436,7 @@ namespace Calculator
 
         protected void btnMC_Click(object sender, EventArgs e)
         {
+            // Pulisce la memoria
             Session["memory"] = null;
 
             btnMR.Enabled = false;
@@ -452,7 +463,7 @@ namespace Calculator
             }
             else if (text.Contains("+"))
             {
-                mValue = mValue - textboxValue;
+                mValue = mValue + textboxValue;
             }
 
             Session["memory"] = mValue;

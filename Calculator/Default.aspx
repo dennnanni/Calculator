@@ -15,7 +15,7 @@
                 <asp:TextBox ID="txtEspressione" runat="server" Height="73px" Width="326px" Font-Size="21" ReadOnly="True"></asp:TextBox>
             <br />
                 <asp:Button ID="btnMR" runat="server" Text="MR" Width="63" Height="30px" Enabled="false" OnClick="btnMR_Click"/>
-                <asp:Button ID="btnMC" runat="server" Text="MC" Width="63" Height="30px" Enabled="false"/>
+                <asp:Button ID="btnMC" runat="server" Text="MC" Width="63" Height="30px" Enabled="false" OnClick="btnMC_Click"/>
                 <asp:Button ID="btnMS" runat="server" Text="MS" Width="64px" Font-Size="" Height="30px" OnClick="btnMS_Click"/>
                 <asp:Button ID="btnMemoriaPiu" runat="server" Text="M+" Width="63px" Font-Size="" Height="30px" OnClick="btnMemoryOperations_Click"/>
                 <asp:Button ID="btnMemoriaMeno" runat="server" Text="M-" Width="63px" Font-Size="" Height="30px" OnClick="btnMemoryOperations_Click"/>
