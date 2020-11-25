@@ -32,7 +32,7 @@ namespace Calculator
             if (!IsPostBack) // Se è il primo collegamento, crea i valori di sessione
             {
                 Session["n1"] = null;
-                Session["operando"] = null;
+                Session["operatore"] = null;
                 Session["n2"] = null;
                 Session["result"] = null;
                 Session["memory"] = null;
@@ -41,7 +41,7 @@ namespace Calculator
             }
             
             // Se ci sono dei valori ancora non completati li visualizza
-            if(Session["operando"] == null)
+            if(Session["operatore"] == null)
             {
                 if (Session["n1"] != null)
                     txtEspressione.Text = Session["n1"].ToString();
@@ -58,7 +58,7 @@ namespace Calculator
             string value = ((Button)sender).Text;
             string number = value;
 
-            object n1 = Session["n1"], n2 = Session["n2"], op = Session["operando"], result = Session["result"];
+            object n1 = Session["n1"], n2 = Session["n2"], op = Session["operatore"], result = Session["result"];
 
             // Se l'operatore non esiste ancora, significa che tutte le cifre selezionate vanno nel 
             // primo numero, se esiste vanno nel secondo
@@ -114,7 +114,7 @@ namespace Calculator
             string op = ((Button)sender).Text;
             double result = 0, value = double.NaN;
             string name = "";
-            object n1 = Session["n1"], n2 = Session["n2"], savedOp = Session["operando"], savedResult = Session["result"];
+            object n1 = Session["n1"], n2 = Session["n2"], savedOp = Session["operatore"], savedResult = Session["result"];
 
             if (savedOp == null) 
             {
@@ -142,7 +142,7 @@ namespace Calculator
                     ErrorInterface(true);
                     txtEspressione.Text = "Input non valido!";
                     Session["n1"] = null;
-                    Session["operando"] = null;
+                    Session["operatore"] = null;
                     Session["n2"] = null;
                     return;
                 }
@@ -168,7 +168,7 @@ namespace Calculator
                     ErrorInterface(true);
                     Session["n1"] = null;
                     Session["n2"] = null;
-                    Session["operando"] = null;
+                    Session["operatore"] = null;
                     return;
                 }
             }
@@ -187,14 +187,14 @@ namespace Calculator
                         ErrorInterface(true);
                         Session["n1"] = null;
                         Session["n2"] = null;
-                        Session["operando"] = null;
+                        Session["operatore"] = null;
                         return;
                     }
 
                     Session["n1"] = result;
                     Session["result"] = result;
                     Session["n2"] = null;
-                    Session["operando"] = op;
+                    Session["operatore"] = op;
                     txtEspressione.Text = result.ToString();
                 }
                 else if(n1 != null && n2 != null) // In caso fosse la prima operazione
@@ -208,19 +208,19 @@ namespace Calculator
                         ErrorInterface(true);
                         Session["n1"] = null;
                         Session["n2"] = null;
-                        Session["operando"] = null;
+                        Session["operatore"] = null;
                         return;
                     }
 
                     Session["n1"] = result;
                     Session["result"] = result;
                     Session["n2"] = null;
-                    Session["operando"] = op;
+                    Session["operatore"] = op;
                     txtEspressione.Text = result.ToString();
                 }
                 else // Se non ci sono operazioni da fare 
                 {
-                    Session["operando"] = op;
+                    Session["operatore"] = op;
                     txtEspressione.Text = "";
                     
                 }
@@ -237,7 +237,7 @@ namespace Calculator
         {
             // L'operando di backup e il numero due di backup serve se ho gia fatto un operazione e continuo a 
             // premere uguale. L'operazione viene reiterata sul risultato.
-            if(Session["operando"] == null && Session["opBackup"] != null && Session["n2Backup"] != null)
+            if(Session["operatore"] == null && Session["opBackup"] != null && Session["n2Backup"] != null)
             {
                 double n1 = double.Parse(Session["n1"].ToString());
                 double n2 = double.Parse(Session["n2Backup"].ToString());
@@ -252,7 +252,7 @@ namespace Calculator
             if (Session["n1"] == null)
             {
                 // Se il numero è il secondo ed è stato scelto il -, va restituito il corrispondente negativo
-                if (Session["operando"].ToString() == "-")
+                if (Session["operatore"].ToString() == "-")
                     txtEspressione.Text = "-" + Session["n2"].ToString();
                 else
                     txtEspressione.Text = Session["n2"].ToString();
@@ -265,7 +265,7 @@ namespace Calculator
             {
                 double n1 = double.Parse(Session["n1"].ToString());
                 double n2 = double.Parse(Session["n2"].ToString());
-                string op = Session["operando"].ToString();
+                string op = Session["operatore"].ToString();
 
                 double result = Operations(n1, n2, op, out string message);
 
@@ -275,7 +275,7 @@ namespace Calculator
                     ErrorInterface(true);
                     Session["n1"] = null;
                     Session["n2"] = null;
-                    Session["operando"] = null;
+                    Session["operatore"] = null;
                     return;
                 }
 
@@ -284,7 +284,7 @@ namespace Calculator
                 Session["opBackup"] = op;
                 Session["n2Backup"] = n2;
                 Session["n2"] = null;
-                Session["operando"] = null;
+                Session["operatore"] = null;
                 txtEspressione.Text = result.ToString();
             }
         }
@@ -353,7 +353,7 @@ namespace Calculator
 
         protected void btnCE_Click(object sender, EventArgs e)
         {
-            object op = Session["operando"];
+            object op = Session["operatore"];
 
             // Elimina il valore in base a quello che usando
             if(op == null)
@@ -380,7 +380,7 @@ namespace Calculator
             // Resetta tutti i valori 
             Session["n1"] = null;
             Session["n2"] = null;
-            Session["operando"] = null;
+            Session["operatore"] = null;
             Session["result"] = null;
             Session["opBackup"] = null;
             Session["n2Backup"] = null;
@@ -393,52 +393,11 @@ namespace Calculator
             }
         }
 
-        ///// <summary>
-        ///// Evento click che gestisce tutti e tre i pulsanti della memoria in base al testo contenuto
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //protected void btnMemoria_Click(object sender, EventArgs e)
-        //{
-        //    string text = ((Button)sender).Text;
-
-        //    if (text.Contains("+")) // Se nel testo del bottone c'è il + significa che bisogna memorizzare
-        //    {
-        //        // Se nella textbox c'è un messaggio di errore lo ignora
-        //        if (!double.TryParse(txtEspressione.Text, out double n))
-        //            return;
-
-        //        // Aggiunge il valore presente nella textbox nella variabile memoria
-        //        Session["memory"] = double.Parse(txtEspressione.Text);
-        //    }
-        //    else if (text.Contains("-")) // Se nel testo del bottone c'è il - significa che bisogna cancellare la memoria
-        //    {
-        //        // Svuota la variabile di memoria
-        //        Session["memory"] = null;
-        //    }
-        //    else if (Session["memory"] != null) // Se non c'è nessuno dei due simboli viene richiesto di visualizzare la memoria
-        //    {
-        //        // Visualizza il valore memorizzato 
-        //        txtEspressione.Text = Session["memory"].ToString();
-
-        //        // Aggiunge il valore memorizzato in uno degli operandi a seconda di quale è vuoto
-        //        object n1 = Session["n1"], n2 = Session["n2"];
-        //        if (n1 == null)
-        //        {
-        //            Session["n1"] = Session["memory"];
-        //        }
-        //        else if (n2 == null)
-        //        {
-        //            Session["n2"] = Session["memory"];
-        //        }
-        //    }
-        //}
-
         protected void btnMR_Click(object sender, EventArgs e)
         {
             double memory = double.Parse(Session["memory"].ToString());
 
-            if(Session["operando"] == null)
+            if(Session["operatore"] == null)
             {
                 Session["n1"] = memory;
                 txtEspressione.Text = memory.ToString();
@@ -505,7 +464,7 @@ namespace Calculator
             string value = "";
             
             // Decide su quale valore deve operare
-            if (Session["operando"] == null)
+            if (Session["operatore"] == null)
                 value = "n1";
             else
                 value = "n2";
@@ -535,7 +494,7 @@ namespace Calculator
             string index = "";
 
             // Decide su quale valore deve operare
-            if (Session["operando"] == null)
+            if (Session["operatore"] == null)
                 index = "n1";
             else
                 index = "n2";
@@ -554,7 +513,7 @@ namespace Calculator
 
         protected void btnPercentuale_Click(object sender, EventArgs e)
         {
-            object n1 = Session["n1"], n2 = Session["n2"], op = Session["operando"];
+            object n1 = Session["n1"], n2 = Session["n2"], op = Session["operatore"];
 
             // Se si sta operando sul primo operando l'operazione di percentuale non è possibile
             if (n1 != null && n2 == null)
