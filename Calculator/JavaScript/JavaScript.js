@@ -86,11 +86,11 @@ function doKeyDown(evt) {
             pressedBtn = document.getElementById("btnDiviso");
             break;
 
-        case 13: // Su Firefox viene intercettato dai tasti di navigazione tra le pagine
+        case 13: 
             pressedBtn = document.getElementById("btnUguale");
             break;
 
-        case 8:
+        case 8: // Su Firefox viene intercettato dai tasti di navigazione tra le pagine
             pressedBtn = document.getElementById("btnBack");
             break;
 

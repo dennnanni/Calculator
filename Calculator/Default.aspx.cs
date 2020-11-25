@@ -518,7 +518,7 @@ namespace Calculator
             // Se si sta operando sul primo operando l'operazione di percentuale non è possibile
             if (n1 != null && n2 == null)
             {
-                Session["result"] = (double)n1 / 100;
+                Session["result"] =  (double)(double.Parse(n1.ToString()) / 100);
                 Session["n1"] = Session["result"];
                 txtEspressione.Text = Session["result"].ToString();
                 return;
